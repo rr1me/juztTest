@@ -1,0 +1,8 @@
+@use '../../app/vars' as v;
+
+.filtersWrapper{
+  padding: 8px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

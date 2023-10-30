@@ -1,0 +1,41 @@
+@use '../../app/vars' as v;
+
+.details{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 30px;
+
+  font: v.$HelveticaNeueCyr;
+
+  align-self: center;
+}
+
+.carImg{
+  width: 100%;
+  object-fit: cover;
+  object-position: bottom;
+  border-radius: v.$borderRadius;
+  border: 1px solid v.$c_border_second;
+}
+
+.carInfo{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 200px;
+}
+
+.tab{
+  width: 50px;
+  height: 2px;
+  flex-grow: 1;
+  background-color: v.$c_border_second;
+  border-radius: v.$borderRadius;
+}
+
+.characteristic{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

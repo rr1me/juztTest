@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\juztTest_backend.props" />
+</Project>

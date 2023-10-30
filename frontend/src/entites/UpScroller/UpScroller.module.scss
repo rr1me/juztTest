@@ -1,0 +1,35 @@
+@use '../../app/vars' as v;
+
+.upScroller {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+
+  background-color: v.$c_main;
+  z-index: 2;
+
+  backdrop-filter: blur(7.5px);
+
+  transform: translateY(-100%);
+  transition: 250ms;
+
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.content{
+  margin-inline: auto;
+  max-width: 18px;
+  transform: scale(150%);
+  text-align: center;
+
+  color: #9f9f9f;
+}
+
+.upScroller:hover{
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.4);
+}

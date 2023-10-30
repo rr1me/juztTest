@@ -1,0 +1,39 @@
+@use '../../app/vars' as v;
+
+.checkedInput{
+  display: flex;
+}
+
+.checkboxWrapper{
+  padding: 0 8px;
+  background-color: v.$c_readOnly;
+  display: flex;
+  align-items: center;
+  border: 1px solid v.$c_border_second;
+  border-right: none;
+  border-radius: 5px 0 0 5px ;
+}
+
+.checkbox{
+  border: 1px solid gray;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+
+.checkedCheckbox::after{
+  content: '\2714';
+  font-size: 14px;
+  position: relative;
+  top: -2px;
+  left: 2px;
+  color: white;
+}
+
+.readOnlyInput{
+  background-color: v.$c_readOnly;
+}
+
+.input {
+  width: 100%;
+}

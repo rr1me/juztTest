@@ -1,0 +1,80 @@
+@use '../../app/vars' as v;
+
+.control{
+  border-radius: v.$borderRadius;
+
+  font-weight: 400;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+}
+
+.inner{
+  display: flex;
+  justify-content: space-between;
+}
+
+.innerEnd{
+  margin-left: 5px;
+  display: flex;
+  gap: 8px;
+  position: relative;
+  left: 5px;
+}
+
+.tab{
+  width: 1px;
+  height: 80%;
+  align-self: center;
+  background-color: v.$c_border_second;
+  border-radius: v.$borderRadius;
+}
+
+.arrow{
+  position: relative;
+  top: 3px;
+  height: 14px;
+
+  transition: 250ms;
+}
+
+// modal
+
+.modalInner{
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.item{
+  cursor: pointer;
+}
+
+.item, .inner{
+  padding: 8px 15px;
+}
+
+.item:hover{
+  background-color: v.$c_border_second
+}
+
+//
+
+.label{
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  transform: translateY(-15px);
+  padding: 0 8px;
+
+  transition: 250ms;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.fieldsetBorder{
+  margin-left: 7.2px;
+  padding: 0 5px;
+}
