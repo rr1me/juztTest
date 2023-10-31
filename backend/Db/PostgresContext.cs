@@ -7,13 +7,7 @@ namespace juztTest_backend.Db;
 public class PostgresContext : DbContext
 {
 	public DbSet<Car> Cars { get; set; }
-
-	public readonly Guid guid;
-
-	public PostgresContext()
-	{
-		guid = Guid.NewGuid();
-	}
+	public DbSet<User> Users { get; set; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{

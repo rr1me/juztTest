@@ -1,7 +1,7 @@
 import { createSlice, Middleware } from '@reduxjs/toolkit';
-import { CarColor } from '../../entites/CarCard/CarCard';
 import { RootState } from '../store';
 import { isNullOrEmpty } from '../../shared/utils';
+import { CarColor } from '../../shared/carOptions';
 
 enum Sort {
 	unset,
@@ -31,7 +31,7 @@ const initialState: ListData = {
 			argument: '',
 			queryArgument: '',
 		},
-		color: CarColor.unset
+		color: CarColor.Unset
 	}
 };
 
@@ -69,10 +69,6 @@ export const saveReportMiddleware: Middleware = api => next => action => {
 	next(action);
 	const type = action.type as string;
 
-	console.log(type);
-
-	console.log(action);
-
 	const argument = (api.getState() as RootState).listSlice.filters.brand.argument;
 	if (type === 'listSlice/setBrandFilterState' && !isNullOrEmpty(argument)){
 		const state = action.payload;
@@ -83,8 +79,4 @@ export const saveReportMiddleware: Middleware = api => next => action => {
 		}
 		api.dispatch(actions.setBrandFilterQueryArgument(''));
 	}
-
-	// if (type === 'saveReport/fulfilled' && action.meta.arg === 0) {
-	// 	// api.dispatch(actions.dropState());
-	// }
 };

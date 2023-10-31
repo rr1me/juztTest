@@ -1,4 +1,4 @@
-import { useAppSelector } from '../redux/store';
+import { useAppSelector } from '../../redux/store';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
 

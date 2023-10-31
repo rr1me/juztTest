@@ -8,9 +8,9 @@ const { setBrandFilterArgument, setBrandFilterState } = actions;
 
 const BrandFilter = () => {
 	const dispatch = useAppDispatch();
-	const checked = useAppSelector(s=>s.listSlice.filters.brand.active);
+	const { active: checked, argument } = useAppSelector(s=>s.listSlice.filters.brand);
 
-	const debounce = useDebounce(dispatch, 300);
+	const debounce = useDebounce(dispatch, 500);
 	const onFilterArgumentChange = (e: ChangeEvent<HTMLInputElement>) =>
 		debounce(setBrandFilterArgument(e.target.value));
 
@@ -19,7 +19,7 @@ const BrandFilter = () => {
 
 	return (
 		<CheckedLabeledInput label={'Brand'} isChecked={checked}
-												 onCheckboxStateChange={onCheckboxStateChange} onChange={onFilterArgumentChange}/>
+												 onCheckboxStateChange={onCheckboxStateChange} defaultValue={argument} onChange={onFilterArgumentChange}/>
 	);
 };
 

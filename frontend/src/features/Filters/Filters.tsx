@@ -6,6 +6,7 @@ import BrandFilter from '../../entites/BrandFilter/BrandFilter';
 import Selector from '../Selector/Selector';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { actions } from '../../redux/slices/listSlice';
+import { carColorOptions } from '../../shared/carOptions';
 
 const { setColorFilter } = actions;
 
@@ -28,7 +29,7 @@ const Filters = () => {
 			<Modal anchor={buttonRef.current} state={modalState} onClose={onModalClose} sx={{ marginTop: 5, width: 'max-content' }}>
 				<div className={s.filtersWrapper}>
 					<BrandFilter/>
-					<Selector label='Color' options={colorOptions} value={color} onChange={onColorFilterChange}/>
+					<Selector label='Color' options={carColorOptions} value={color} onChange={onColorFilterChange}/>
 				</div>
 			</Modal>
 		</>
@@ -36,20 +37,3 @@ const Filters = () => {
 };
 
 export default Filters;
-
-const colorOptions = [
-	'Unset',
-	'White',
-	'Gray',
-	'Black',
-	'Blue',
-	'Silver',
-	'Brown',
-	'Red',
-	'Green',
-	'Beige',
-	'Orange',
-	'Cyan',
-	'Yellow',
-	'Other',
-];

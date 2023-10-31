@@ -32,3 +32,7 @@ C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\obj\Debug\net8.0\juztTest_
 C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\obj\Debug\net8.0\ref\juztTest_backend.dll
 C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\bin\Debug\net8.0\Autofac.dll
 C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\bin\Debug\net8.0\Autofac.Extensions.DependencyInjection.dll
+C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\obj\Debug\net8.0\juztTest_backend.sourcelink.json
+C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\bin\Debug\net8.0\JWT.dll
+C:\Users\nmc\Desktop\imaginations\pl\juztTest\backend\bin\Debug\net8.0\Newtonsoft.Json.dll

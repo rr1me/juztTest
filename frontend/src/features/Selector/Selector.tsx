@@ -43,7 +43,7 @@ const Selector = ({ label = '', options, value, onChange, className = '', }:
 				</div>
 
 				<FieldsetBorder label={label}
-					labelPlaceStyle={{ maxWidth: !label ? '0.01px' : '100%', padding: !label ? '0' : '0 5px', fontSize: '0.85em' }}
+					labelPlaceStyle={{ maxWidth: !label ? '0.01px' : '100%', padding: !label ? '0' : '0 7px', fontSize: '0.85em', marginLeft: '6px' }}
 					className={s.fieldsetBorder}/>
 			</div>
 

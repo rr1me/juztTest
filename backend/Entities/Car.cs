@@ -30,3 +30,28 @@ public enum Transmission
 	Manual,
 	Robotic
 }
+
+public enum Sorting
+{
+	Unset,
+	Up,
+	Down
+}
+
+public enum ColorFilter
+{
+	Unset,
+	White,
+	Gray,
+	Black,
+	Blue,
+	Silver,
+	Brown,
+	Red,
+	Green,
+	Beige,
+	Orange,
+	Cyan,
+	Yellow,
+	Other
+}

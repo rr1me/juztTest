@@ -2,43 +2,11 @@
 using juztTest_backend.Data;
 using juztTest_backend.Db;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 namespace juztTest_backend.Controllers;
 
-public class MainController : ControllerBase
+public class MainController(PostgresContext db) : ControllerBase
 {
-	private readonly PostgresContext _db;
-	private readonly TestClass _testClass;
-
-	public MainController(PostgresContext db, TestClass testClass)
-	{
-		_db = db;
-		_testClass = testClass;
-	}
-
-	[HttpGet("/check")]
-	public string Check()
-	{
-		_db.Database.EnsureCreated();
-		_db.Cars.Add(new Car
-		{
-			Image = "0",
-			Brand = "any",
-			Model = "any",
-			Color = "any",
-			Price = 5.5,
-			Year = 2022,
-			Engine = EngineType.Gasoline,
-			Transmission = Transmission.Auto,
-			CruisingRange = 9.9
-		});
-		_db.SaveChanges();
-
-		Console.WriteLine("hello there");
-		return "Hello";
-	}
-
 	[HttpGet("/")]
 	public IActionResult Get(int limit, int offset, 
 		Sorting yearSorting, Sorting priceSorting,
@@ -46,7 +14,7 @@ public class MainController : ControllerBase
 	{
 		try
 		{
-			var carList = _db.Cars.ToList();
+			var carList = db.Cars.ToList();
 
 			var carCount = carList.Count;
 
@@ -92,6 +60,16 @@ public class MainController : ControllerBase
 		}
 	}
 
+	[HttpGet("/car/{id}")]
+	public IActionResult GetParticular(int id)
+	{
+		var car = db.Cars.FirstOrDefault(x => x.Id == id);
+
+		if (car == null) return BadRequest("No car with that id");
+
+		return Ok(car);
+	}
+
 	[HttpGet("/image")]
 	public IActionResult GetImage()
 	{
@@ -106,35 +84,4 @@ public class MainController : ControllerBase
 
 		return Ok("ok");
 	}
-}
-
-// public enum Sorting
-// {
-// 	Year,
-// 	Price
-// }
-
-public enum Sorting
-{
-	Unset,
-	Up,
-	Down
-}
-
-public enum ColorFilter
-{
-	Unset,
-	White,
-	Gray,
-	Black,
-	Blue,
-	Silver,
-	Brown,
-	Red,
-	Green,
-	Beige,
-	Orange,
-	Cyan,
-	Yellow,
-	Other
 }

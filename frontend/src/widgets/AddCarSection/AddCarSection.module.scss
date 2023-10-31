@@ -1,0 +1,16 @@
+.addCarSection{
+  align-self: center;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+}

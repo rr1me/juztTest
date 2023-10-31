@@ -1,7 +1,8 @@
 import s from './CarCardList.module.scss';
-import CarCard, { Car } from '../../entites/CarCard/CarCard';
+import CarCard from '../../entites/CarCard/CarCard';
 import { useEffect } from 'react';
-import useGetCarList from '../../shared/useGetCarList';
+import useGetCarList from '../../shared/queries/useGetCarList';
+import { Car } from '../../shared/carOptions';
 
 const CarCardList = () => {
 	const { data, isError, fetchNextPage, isFetching } = useGetCarList();

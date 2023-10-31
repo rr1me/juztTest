@@ -1,36 +1,7 @@
 import s from './CarCard.module.scss';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
-
-export enum CarColor {
-	unset,
-	white,
-	gray,
-	black,
-	blue,
-	silver,
-	brown,
-	red,
-	green,
-	beige,
-	orange,
-	cyan,
-	yellow,
-	other,
-}
-
-export type Car = {
-	id: number;
-	image: string;
-	brand: string;
-	model: string;
-	color: CarColor;
-	price: number;
-	year: number;
-	engine: 'gasoline' | 'diesel' | 'electrical';
-	transmission: 'auto' | 'manual' | 'robotic';
-	cruisingRange: number
-}
+import { Car } from '../../shared/carOptions';
 
 const CarCard = ({ children: car }: {children: Car}) => {
 	const navigate = useNavigate();

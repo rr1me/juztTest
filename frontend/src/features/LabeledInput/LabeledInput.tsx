@@ -1,5 +1,5 @@
 import s from './Labelednput.module.scss';
-import React, { CSSProperties, HTMLProps, memo, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, HTMLProps, memo, useLayoutEffect, useRef, useState } from 'react';
 import { combinedStyle } from '../../shared/utils';
 import FieldsetBorder from '../../entites/FieldsetBorder/FieldsetBorder';
 import { useIsFirstRender } from '../../shared/hooks';
@@ -24,35 +24,56 @@ const LabeledInput = ({
 	const isFirstRender = useIsFirstRender();
 	const [focus, setFocus] = useState(false);
 
+	const elemRef = useRef<HTMLDivElement>(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const labelRef = useRef<HTMLLabelElement>(null);
 	const fieldsetRef = useRef<HTMLLegendElement>(null);
 
-	useEffect(() => {
-		if (isFirstRender || !inputRef.current || !labelRef.current || !fieldsetRef.current) return;
+	useLayoutEffect(() => {
+		const element = elemRef.current;
+		const input = inputRef.current;
+		const label = labelRef.current;
+		if (!input || !label || !fieldsetRef.current || !element) return;
 
-		const labelStyle = labelRef.current.style;
+		const labelStyle = label.style;
 		const legendStyle = fieldsetRef.current.style;
 
-		if (!focus) {
-			if (inputRef.current.value !== '') return;
+		const inputValue = input.value;
 
-			labelStyle.top = 8 + 'px'; // like their top-left props in scss
-			labelStyle.left = 10 + 'px';
+		if ((!focus && !isFirstRender) || (inputValue === '' && isFirstRender)) {
+			if (inputValue !== '') return;
+			const elemRect = element.getBoundingClientRect();
+			const inputRect = input.getBoundingClientRect();
+
+			labelStyle.top = inputRect.top - elemRect.top + 'px';
+			labelStyle.left = inputRect.left - elemRect.left + 'px';
+
 			labelStyle.fontSize = '14px';
 
 			legendStyle.maxWidth = '0.01px';
 			legendStyle.padding = '0';
-			return;
 		}
+		else if ((focus && inputValue === '') || (inputValue !== '' && isFirstRender)) {
+			const elemRect = element.getBoundingClientRect();
+			const inputRect = input.getBoundingClientRect();
+			const labelRect = label.getBoundingClientRect();
 
-		if (focus) {
-			labelStyle.top = -9 + 'px';
-			labelStyle.left = 6 + 'px';
-			labelStyle.fontSize = '12px';
+			labelStyle.top = -(labelRect.height / 2) + 'px';
+			labelStyle.left = (inputRect.left - elemRect.left) / 1.5 + 'px';
+			labelStyle.fontSize = '0.8em';
 
 			legendStyle.maxWidth = '100%';
-			legendStyle.padding = '0 5px';
+
+			const differenceDivided = (inputRect.left - elemRect.left) / 3;
+
+			legendStyle.padding = `0 ${differenceDivided}px`;
+			legendStyle.marginLeft = differenceDivided + 'px';
+		}
+
+		if (isFirstRender){
+			requestAnimationFrame(() => {
+				labelStyle.transition = '250ms';
+			});
 		}
 
 	}, [focus]);
@@ -60,19 +81,18 @@ const LabeledInput = ({
 	const focusEvent = (x: boolean) => () => setFocus(x);
 
 	const inputClassName = s.inputWrapper
-		// + combinedStyle(!!readOnly, s.readOnly)
     + combinedStyle(!!className, className)
     + combinedStyle(invisible, s.inputInvisible)
     + combinedStyle(error, s.error);
 
 	return (
-		<div className={inputClassName} style={borderStyle}>
+		<div className={inputClassName} style={borderStyle} ref={elemRef}>
 			<input {...props} className={s.input} ref={inputRef} onFocus={focusEvent(true)} onBlur={focusEvent(false)} disabled={readOnly}/>
 
 			<label className={s.label} ref={labelRef}>{label}</label>
 
 			<FieldsetBorder label={label} className={s.fieldsetBorder} ref={fieldsetRef}
-				borderStyle={borderStyle} labelPlaceStyle={{ fontSize: '0.75em' }}/>
+				borderStyle={borderStyle} labelPlaceStyle={{ fontSize: '0.8em' }}/>
 		</div>
 	);
 };

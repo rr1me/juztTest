@@ -22,8 +22,12 @@ const Modal = ({ anchor, state, onClose, children, sx }:
 
 		if (!state) return;
 
-		const resizeEvent = () =>
-			style.left = anchor.getBoundingClientRect().left + 'px';
+		const resizeEvent = () => {
+			const anchorRect = anchor.getBoundingClientRect();
+
+			style.left = anchorRect.left + 'px';
+			style.top = anchorRect.top + anchorRect.height + 'px';
+		}
 		window.addEventListener('resize', resizeEvent);
 
 		const scrollEvent = () => {

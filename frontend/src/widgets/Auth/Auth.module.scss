@@ -1,0 +1,26 @@
+.auth{
+  align-self: center;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+.form{
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input{
+  padding: 15px 18px;
+}
+
+.button {
+  align-self: flex-end;
+}
+
+.info{
+  font-size: 14px;
+}

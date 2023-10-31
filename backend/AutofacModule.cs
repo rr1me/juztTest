@@ -1,7 +1,6 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using juztTest_backend.Db;
-using Microsoft.EntityFrameworkCore;
+using juztTest_backend.JWT;
 
 namespace juztTest_backend;
 
@@ -10,6 +9,6 @@ public class AutofacModule : Module
 	protected override void Load(ContainerBuilder builder)
 	{
 		builder.RegisterType<PostgresContext>().InstancePerLifetimeScope();
-		builder.RegisterType<TestClass>().SingleInstance();
+		builder.RegisterType<JwtOrchestrator>().SingleInstance();
 	}
 }
