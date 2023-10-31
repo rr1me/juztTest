@@ -19,7 +19,8 @@ const BrandFilter = () => {
 
 	return (
 		<CheckedLabeledInput label={'Brand'} isChecked={checked}
-												 onCheckboxStateChange={onCheckboxStateChange} defaultValue={argument} onChange={onFilterArgumentChange}/>
+												 onCheckboxStateChange={onCheckboxStateChange}
+												 defaultValue={argument} onChange={onFilterArgumentChange}/>
 	);
 };
 

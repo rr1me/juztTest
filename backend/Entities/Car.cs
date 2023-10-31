@@ -1,16 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace juztTest_backend.Data;
 
 public class Car
 {
 	[Key]
+	[JsonIgnore]
 	public int Id { get; set; }
-	public string Image { get; set; }
+	
+	
+	[NotMapped]
+	public IFormFile Image { get; set; }
+	
 	public string Brand { get; set; }
 	public string Model { get; set; }
-	public string Color { get; set; }
-	public double Price { get; set; }
+	public ColorFilter Color { get; set; }
+	public string Price { get; set; }
 	public int Year { get; set; }
 	public EngineType Engine { get; set; }
 	public Transmission Transmission { get; set; }

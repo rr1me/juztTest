@@ -41,8 +41,6 @@
 .info{
   display: flex;
   justify-content: space-between;
-}
-
-.priceYear{
-  align-self: flex-end;
+  flex-direction: column;
+  gap: 5px;
 }

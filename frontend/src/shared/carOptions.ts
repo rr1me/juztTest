@@ -29,7 +29,6 @@ export enum Transmission {
 
 export type Car = {
 	id: number;
-	image: string;
 	brand: string;
 	model: string;
 	color: CarColor;
@@ -64,7 +63,7 @@ export const carEngineOptions: (keyof typeof Engine)[] = [
 ];
 
 export const carTransmissionOptions: (keyof typeof Transmission)[] = [
-	'Manual',
 	'Auto',
+	'Manual',
 	'Robotic'
 ];

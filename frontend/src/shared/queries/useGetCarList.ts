@@ -13,7 +13,7 @@ const useGetCarList = () => {
 	} = useInfiniteQuery({
 		queryKey: ['filters', brand, color, yearSorting, priceSorting],
 		queryFn: async (context) =>
-			(await axios.get('http://localhost:5132/', { params: {
+			(await axios.get(process.env.REACT_APP_API!, { params: {
 				offset: context.pageParam * 15,
 				limit: 15,
 				brandFilter: brand,

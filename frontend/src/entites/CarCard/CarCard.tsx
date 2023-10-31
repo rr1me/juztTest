@@ -1,7 +1,8 @@
 import s from './CarCard.module.scss';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { Car } from '../../shared/carOptions';
+import { Car, carColorOptions } from '../../shared/carOptions';
+import Characteristic from '../Characteristic/Characteristic';
 
 const CarCard = ({ children: car }: {children: Car}) => {
 	const navigate = useNavigate();
@@ -10,19 +11,16 @@ const CarCard = ({ children: car }: {children: Car}) => {
 
 	return (
 		<div className={s.card}>
-			<img className={s.carImg} src='http://localhost:5132/image' alt=''/>
+			<img className={s.carImg} src={`${process.env.REACT_APP_API}/image/` + car.id} alt=''/>
 
 			<div className={s.tab}/>
 			<article className={s.info}>
-				<article>
-					<p>id: {car.id}</p>
-					<p>Brand: {car.brand}</p>
-					<p>Model: {car.model}</p>
-				</article>
-				<article className={s.priceYear}>
-					<p>Year: {car.year}</p>
-					<p>Price: {car.price}</p>
-				</article>
+				<Characteristic label={'Id'} field={car.id}/>
+				<Characteristic label='Brand' field={car.brand}/>
+				<Characteristic label='Model' field={car.model}/>
+				<Characteristic label='Color' field={carColorOptions[car.color]}/>
+				<Characteristic label='Price' field={car.price}/>
+				<Characteristic label='Year' field={car.year}/>
 			</article>
 			<div className={s.tab}/>
 

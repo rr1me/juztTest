@@ -1,0 +1,15 @@
+@use '../../app/vars' as v;
+
+.tab{
+  width: 50px;
+  height: 2px;
+  flex-grow: 1;
+  background-color: v.$c_border_second;
+  border-radius: v.$borderRadius;
+}
+
+.characteristic{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

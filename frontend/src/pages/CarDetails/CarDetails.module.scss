@@ -3,6 +3,7 @@
 .details{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  width: 100%;
   gap: 30px;
 
   font: v.$HelveticaNeueCyr;
@@ -24,18 +25,4 @@
   justify-content: space-between;
   width: 100%;
   min-height: 200px;
-}
-
-.tab{
-  width: 50px;
-  height: 2px;
-  flex-grow: 1;
-  background-color: v.$c_border_second;
-  border-radius: v.$borderRadius;
-}
-
-.characteristic{
-  display: flex;
-  align-items: center;
-  gap: 15px;
 }

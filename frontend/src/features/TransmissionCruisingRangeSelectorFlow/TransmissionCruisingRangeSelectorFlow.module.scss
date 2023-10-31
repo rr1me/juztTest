@@ -1,0 +1,16 @@
+.flow{
+  position: relative;
+
+  overflow-x: clip;
+}
+
+.inner{
+  transition: 250ms;
+}
+
+.secondElement{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  transform: translateX(calc(100% + 5px));
+}

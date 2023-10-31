@@ -8,7 +8,7 @@ const useGetCar = () => {
 	const { data, isError } = useQuery({
 		queryKey: ['id', id],
 		queryFn: async () =>
-			(await axios.get('http://localhost:5132/car/' + id)).data,
+			(await axios.get(`${process.env.REACT_APP_API}/car/` + id)).data,
 		refetchOnMount: false,
 		refetchOnWindowFocus: false,
 		retry: 0,

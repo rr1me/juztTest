@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using juztTest_backend.Data;
 using juztTest_backend.Db;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace juztTest_backend.Controllers;
@@ -42,14 +43,14 @@ public class MainController(PostgresContext db) : ControllerBase
 					carList = carList.OrderByDescending(x => x.Price).ToList();
 			}
 			
-			IEnumerable slicedList = carList.Slice(offset, processedLimit);
+			var slicedList = carList.Slice(offset, processedLimit).ToList();
 
 			if (!string.IsNullOrEmpty(brandFilter))
-				slicedList = (slicedList as List<Car>).ToArray().Where(x => x.Brand.Contains(brandFilter));
+				slicedList = slicedList.Where(x => x.Brand.Contains(brandFilter)).ToList();
 
 			if (colorFilter != ColorFilter.Unset)
 			{
-				Console.WriteLine(colorFilter);
+				slicedList = slicedList.ToArray().Where(x => x.Color == colorFilter).ToList();
 			}
 			
 			return Ok(slicedList);
@@ -70,18 +71,66 @@ public class MainController(PostgresContext db) : ControllerBase
 		return Ok(car);
 	}
 
-	[HttpGet("/image")]
-	public IActionResult GetImage()
+	[HttpPut("/")]
+	[Authorize]
+	public async Task<IActionResult> Put([FromForm] Car car)
 	{
-		return File(System.IO.File.ReadAllBytes("./tbrender_006.png"), "image/png");
+		var i = db.Cars.Add(car);
+		await db.SaveChangesAsync();
+
+		var carImage = car.Image;
+		await using (var stream = new FileStream($"./images/{car.Id}{Path.GetExtension(carImage.FileName)}", FileMode.Create))
+		{
+			await carImage.CopyToAsync(stream);
+		}
+
+		return Ok("");
+	}
+
+	[HttpGet("/image/{id}")]
+	public IActionResult GetImage(int id)
+	{
+		var matchingFile = Directory.GetFiles("./images", $"{id}.*")[0];
+
+		var extension = Path.GetExtension(matchingFile);
+		return File(System.IO.File.ReadAllBytes($"./images/{id}{extension}"), GetMimeType(extension));
 	}
 
 	[HttpPost("/up")]
 	public IActionResult Post([FromForm] IFormFile file)
 	{
+		if (file.ContentType is not ("image/png" or "image/jpeg"))
+			return BadRequest("Not an image");
+		
 		if (file.Length > 50 * 1024 * 1024)
 			return BadRequest("Image is too large");
 
 		return Ok("ok");
 	}
+	
+	private string GetMimeType(string fileExtension)
+	{
+		var mimeTypes = new Dictionary<string, string>
+		{
+			{ ".jpg", "image/jpeg" },
+			{ ".jpeg", "image/jpeg" },
+			{ ".png", "image/png" },
+			{ ".gif", "image/gif" },
+			{ ".pdf", "application/pdf" },
+		};
+
+		return mimeTypes.TryGetValue(fileExtension, out var contentType) ? contentType : "application/octet-stream";
+	}
+
+	[HttpPut("/checker")]
+	public IActionResult check([FromForm] Car model)
+	{
+		Console.WriteLine(Convert.ToDouble(model.Price));
+		return Ok(model.Price);
+	}
+}
+
+public class Model
+{
+	public double check { get; set; }
 }

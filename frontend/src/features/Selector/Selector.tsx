@@ -6,7 +6,7 @@ import { combinedStyle } from '../../shared/utils';
 import FieldsetBorder from '../../entites/FieldsetBorder/FieldsetBorder';
 import SimpleBar from 'simplebar-react';
 
-const Selector = ({ label = '', options, value, onChange, className = '', }:
+const Selector = ({ label = '', options, value, onChange, className = '' }:
 	{label?: string, options: string[], value: number,
 		onChange: (e:number) => void, className?: string}) => {
 	const controlRef = useRef(null);
@@ -29,9 +29,9 @@ const Selector = ({ label = '', options, value, onChange, className = '', }:
 					 onClick={onControlClick} ref={controlRef}>
 
 				{label &&
-          <div className={s.label}>
+          <label className={s.label}>
           	{label}
-          </div>
+          </label>
 				}
 
 				<div className={s.inner}>
@@ -44,7 +44,7 @@ const Selector = ({ label = '', options, value, onChange, className = '', }:
 
 				<FieldsetBorder label={label}
 					labelPlaceStyle={{ maxWidth: !label ? '0.01px' : '100%', padding: !label ? '0' : '0 7px', fontSize: '0.85em', marginLeft: '6px' }}
-					className={s.fieldsetBorder}/>
+				/>
 			</div>
 
 			<Modal anchor={controlRef.current} state={open} onClose={onModalClose} sx={{ marginTop: 5 }}>

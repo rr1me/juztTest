@@ -59,15 +59,13 @@ const LabeledInput = ({
 			const labelRect = label.getBoundingClientRect();
 
 			labelStyle.top = -(labelRect.height / 2) + 'px';
-			labelStyle.left = (inputRect.left - elemRect.left) / 1.5 + 'px';
+			labelStyle.left = (inputRect.left - elemRect.left) + 'px';
 			labelStyle.fontSize = '0.8em';
 
 			legendStyle.maxWidth = '100%';
 
-			const differenceDivided = (inputRect.left - elemRect.left) / 3;
-
-			legendStyle.padding = `0 ${differenceDivided}px`;
-			legendStyle.marginLeft = differenceDivided + 'px';
+			legendStyle.padding = `0 ${(inputRect.left - elemRect.left) / 1.5}px`;
+			legendStyle.marginLeft = (inputRect.left - elemRect.left) / 3 + 'px';
 		}
 
 		if (isFirstRender){

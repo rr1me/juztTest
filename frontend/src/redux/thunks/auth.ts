@@ -1,13 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosPromise } from 'axios';
+import axios from 'axios';
 import { RootState } from '../store';
+import { processRequest } from '../../shared/utils';
+
+const URL = process.env.REACT_APP_API;
 
 export const verify = createAsyncThunk(
 	'auth/auth',
 	async (_, { rejectWithValue }) => {
-		const request = axios.get('http://localhost:5132/auth',
+		const request = axios.get(`${URL}/auth`,
 			{ withCredentials: true });
-		return await processAuthRequest(request, rejectWithValue);
+		return await processRequest(request, rejectWithValue);
 	}
 );
 
@@ -16,17 +19,8 @@ export const login = createAsyncThunk(
 	async (_, { getState, rejectWithValue }) => {
 		const { username, password } = (getState() as RootState).authSlice;
 
-		const request = axios.post('http://localhost:5132/auth/login',
+		const request = axios.post(`${URL}/auth/login`,
 			{ username, password }, { withCredentials: true });
-		return await processAuthRequest(request, rejectWithValue);
+		return await processRequest(request, rejectWithValue);
 	}
 );
-
-const processAuthRequest = async (request: AxiosPromise, rejectWithValue: (v: string) => void) => {
-	try{
-		await request;
-		return;
-	}catch (_) {
-		return rejectWithValue('Unauthorized');
-	}
-};

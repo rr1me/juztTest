@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("juztTest_backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6b64e453fa1a20de00cbe7e0e6e3e0aa25ffd96")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53873293e6b4786f1a6d935b91d21208af4dc4a0")]
 [assembly: System.Reflection.AssemblyProductAttribute("juztTest_backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("juztTest_backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

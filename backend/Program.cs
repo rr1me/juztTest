@@ -1,9 +1,9 @@
-using System.Security.Cryptography;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using juztTest_backend;
 using juztTest_backend.Db;
 using juztTest_backend.Middlewares;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
@@ -14,6 +14,11 @@ builder.Services.AddControllers();
 builder.Services.AddAuthentication().AddScheme<AuthScheme, AuthMiddleware>("AuthScheme", null);
 
 var app = builder.Build();
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+	DefaultRequestCulture = new RequestCulture("en-US")
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

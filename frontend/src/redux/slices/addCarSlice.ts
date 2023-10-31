@@ -1,17 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Car, CarColor, Engine, Transmission } from '../../shared/carOptions';
+import addCar from '../thunks/addCar';
+import notify from '../../shared/notify';
 
-export type AddCarData = Omit<Car, 'image' | 'price' | 'id' | 'year' | 'cruisingRange'> & {image: File | null, price: string, year: string, cruisingRange: string}
+export type AddCarData = Omit<Car, 'image' | 'price' | 'id' | 'year' | 'cruisingRange'> & {price: string, year: string, cruisingRange: string}
 
 const initialState: AddCarData = {
-	image: null,
 	brand: '',
 	model: '',
 	color: CarColor.Unset,
 	price: '',
 	year: '',
 	engine: Engine.Gasoline,
-	transmission: Transmission.Manual,
+	transmission: Transmission.Auto,
 	cruisingRange: ''
 };
 
@@ -31,7 +32,16 @@ const addCarSlice = createSlice({
 		setYear: getSetter<'year'>('year'),
 		setEngine: getSetter<'engine'>('engine'),
 		setTransmission: getSetter<'transmission'>('transmission'),
-		setCruisingRange: getSetter<'cruisingRange'>('cruisingRange'),
+		setCruisingRange: getSetter<'cruisingRange'>('cruisingRange')
+	},
+	extraReducers: b => {
+		b
+			.addCase(addCar.fulfilled, () => {
+				notify('Your car successfully added');
+			})
+			.addCase(addCar.rejected, (state, { payload }) => {
+				notify(payload as string, 'error');
+			})
 	}
 });
 

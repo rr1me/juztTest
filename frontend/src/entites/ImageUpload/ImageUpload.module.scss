@@ -1,0 +1,32 @@
+@use '../../app/vars' as v;
+
+.upload {
+  border-radius: v.$borderRadius;
+  cursor: pointer;
+
+  position: relative;
+}
+
+.input{
+  width: 100%;
+  cursor: pointer;
+  padding: 8px 11px;
+}
+
+.input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+  width: 0;
+  padding: 0;
+}
+
+.label{
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  transform: translateY(-15px);
+  padding: 0 8px;
+
+  transition: 250ms;
+  pointer-events: none;
+  font-size: 12px;
+}

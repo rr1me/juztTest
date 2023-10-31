@@ -1,11 +1,15 @@
 import s from './AddCarSection.module.scss';
-import LabeledInput from '../../features/LabeledInput/LabeledInput';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
-import { ChangeEvent } from 'react';
-import { actions, AddCarData } from '../../redux/slices/addCarSlice';
-import { PayloadAction } from '@reduxjs/toolkit';
-import Selector from '../../features/Selector/Selector';
+import { actions } from '../../redux/slices/addCarSlice';
 import { carColorOptions, carEngineOptions, carTransmissionOptions } from '../../shared/carOptions';
+import { InputWrapped, SelectorWrapped } from '../../shared/componentWrappers';
+import TransmissionCruisingRangeSelectorFlow
+	from '../../features/TransmissionCruisingRangeSelectorFlow/TransmissionCruisingRangeSelectorFlow';
+import ImageUpload from '../../entites/ImageUpload/ImageUpload';
+import Button from '../../entites/Button/Button';
+import { FormEvent } from 'react';
+import { useAppDispatch } from '../../redux/store';
+import addCar from '../../redux/thunks/addCar';
+import { useQueryClient } from '@tanstack/react-query';
 
 const {
 	setBrand,
@@ -14,22 +18,34 @@ const {
 	setYear,
 	setPrice,
 	setEngine,
-	setTransmission,
-	setCruisingRange
 } = actions;
 
 const AddCarSection = () => {
+	const q = useQueryClient();
+	const dispatch = useAppDispatch();
+
+	const onSubmitClick = async (e: FormEvent) => {
+		e.preventDefault();
+		const i = await dispatch(addCar());
+		if (i.meta.requestStatus !== 'rejected')
+			q.getQueryCache().getAll().forEach(x => {
+				if (x.options.queryKey && x.options.queryKey[0] === 'filters')
+					x.reset();
+			});
+	};
+
 	return (
 		<section className={s.addCarSection}>
-			<form className={s.form}>
+			<form className={s.form} onSubmit={onSubmitClick}>
 				<InputWrapped label={'Brand'} sliceField={'brand'} reducer={setBrand}/>
 				<InputWrapped label={'Model'} sliceField={'model'} reducer={setModel}/>
-				<InputWrapped label={'Year'} sliceField={'year'} reducer={setYear}/>
-				<InputWrapped label={'Price'} sliceField={'price'} reducer={setPrice}/>
+				<InputWrapped label={'Year'} sliceField={'year'} reducer={setYear} returnProcessor={onlyDigits}/>
+				<InputWrapped label={'Price'} sliceField={'price'} reducer={setPrice} returnProcessor={onlyDoubles}/>
 				<SelectorWrapped label={'Color'} sliceField={'color'} options={carColorOptions} reducer={setColor}/>
 				<SelectorWrapped label={'Engine'} sliceField={'engine'} options={carEngineOptions} reducer={setEngine}/>
-				<SelectorWrapped label={'Transmission'} sliceField={'transmission'} options={carTransmissionOptions} reducer={setTransmission}/>
-				<input type='file'/>
+				<TransmissionCruisingRangeSelectorFlow/>
+				<ImageUpload/>
+				<Button className={s.button}>Submit</Button>
 			</form>
 		</section>
 	);
@@ -37,27 +53,14 @@ const AddCarSection = () => {
 
 export default AddCarSection;
 
-type WrappedComponent<T, E> = {
-	label: string,
-	sliceField: keyof E,
-	reducer: (data: T) => PayloadAction<T>
+const onlyDoubles = (s: string) => {
+	const match = s.match(/\d+\.\d*|\.?\d+/);
+
+	return match ? match[0] : '';
 };
 
-const InputWrapped = ({ label, sliceField, reducer }: WrappedComponent<string, Omit<AddCarData, 'image'>>) => {
-	const dispatch = useAppDispatch();
-	const value = useAppSelector(s=>s.addCarSlice[sliceField]);
+const onlyDigits = (s: string) => {
+	const match = s.match(/^\d{1,4}/);
 
-	const onInputChange = (e: ChangeEvent<HTMLInputElement>) => dispatch(reducer(e.target.value));
-
-	return <LabeledInput label={label} className={s.input} onChange={onInputChange} value={value}/>;
-};
-
-const SelectorWrapped = ({ label, options, sliceField, reducer }:
-	WrappedComponent<number, Pick<AddCarData, 'color' | 'engine' | 'transmission'>> & {options: string[]}) => {
-	const dispatch = useAppDispatch();
-	const value = useAppSelector(s=>s.addCarSlice[sliceField]);
-
-	const onSelectorChange = (v: number) => dispatch(reducer(v));
-
-	return <Selector label={label} options={options} value={value} onChange={onSelectorChange}/>;
+	return match ? match[0] : '';
 };

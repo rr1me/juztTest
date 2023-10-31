@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login, verify } from '../thunks/auth';
+import notify from '../../shared/notify';
 
 export enum Authorized {
 	unknown,
@@ -9,14 +10,14 @@ export enum Authorized {
 
 type AuthData = {
 	authorized: Authorized,
-	authorizationError: boolean,
+	// authorizationError: boolean,
 	username: string,
 	password: string
 }
 
 const initialState: AuthData = {
 	authorized: Authorized.unknown,
-	authorizationError: false,
+	// authorizationError: false,
 	username: '',
 	password: ''
 };
@@ -41,15 +42,11 @@ const authSlice = createSlice({
 				state.authorized = Authorized.restricted;
 			})
 
-			.addCase(login.pending, state => {
-				if(state.authorizationError)
-					state.authorizationError = false;
-			})
 			.addCase(login.fulfilled, state => {
 				state.authorized = Authorized.verified;
 			})
-			.addCase(login.rejected, state => {
-				state.authorizationError = true;
+			.addCase(login.rejected, () => {
+				notify('Something went wrong', 'error');
 			})
 		;
 	}
