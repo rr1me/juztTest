@@ -1,7 +1,7 @@
 import s from './AddCarSection.module.scss';
 import { actions } from '../../redux/slices/addCarSlice';
-import { carColorOptions, carEngineOptions, carTransmissionOptions } from '../../shared/carOptions';
-import { InputWrapped, SelectorWrapped } from '../../shared/componentWrappers';
+import { carColorOptions, carEngineOptions } from '../../shared/carOptions';
+import { InputWrapped, SelectorWrapped } from '../../entites/ComponentWrappers/ComponentWrappers';
 import TransmissionCruisingRangeSelectorFlow
 	from '../../features/TransmissionCruisingRangeSelectorFlow/TransmissionCruisingRangeSelectorFlow';
 import ImageUpload from '../../entites/ImageUpload/ImageUpload';

@@ -19,6 +19,7 @@ const Header = () => {
 
 		if (!element){
 			tab.style.width = 0 + 'px';
+			tab.setAttribute('data--current', pathname);
 			return;
 		}
 

@@ -3,6 +3,7 @@ import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { Car, carColorOptions } from '../../shared/carOptions';
 import Characteristic from '../Characteristic/Characteristic';
+import { API_URL } from '../../shared/utils';
 
 const CarCard = ({ children: car }: {children: Car}) => {
 	const navigate = useNavigate();
@@ -11,7 +12,7 @@ const CarCard = ({ children: car }: {children: Car}) => {
 
 	return (
 		<div className={s.card}>
-			<img className={s.carImg} src={`${process.env.REACT_APP_API}/image/` + car.id} alt=''/>
+			<img className={s.carImg} src={`${API_URL}/image/` + car.id} alt=''/>
 
 			<div className={s.tab}/>
 			<article className={s.info}>

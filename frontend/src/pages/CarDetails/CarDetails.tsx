@@ -2,11 +2,12 @@ import s from './CarDetails.module.scss';
 import useGetCar from '../../shared/queries/useGetCar';
 import { carColorOptions, carEngineOptions, carTransmissionOptions, Engine } from '../../shared/carOptions';
 import Characteristic from '../../entites/Characteristic/Characteristic';
+import { API_URL } from '../../shared/utils';
 
 const CarDetails = () => {
 	const { car, isError } = useGetCar();
 
-	if (!car) return (<></>);
+	if (!car) return <></>;
 
 	return (
 		<main className={s.details}>
@@ -17,7 +18,7 @@ const CarDetails = () => {
 				:
 				<>
 					<section>
-						<img className={s.carImg} src={`${process.env.REACT_APP_API}/image/` + car.id} alt=''/>
+						<img className={s.carImg} src={`${API_URL}/image/` + car.id} alt=''/>
 					</section>
 
 					<section className={s.carInfo}>
@@ -27,7 +28,7 @@ const CarDetails = () => {
 						<Characteristic label='Price' field={car.price}/>
 						<Characteristic label='Year' field={car.year}/>
 						<Characteristic label='Engine type' field={carEngineOptions[car.engine]}/>
-						<Characteristic label='Transmission' field={carTransmissionOptions[car.transmission]}/>
+						{car.engine !== Engine.Electrical && <Characteristic label='Transmission' field={carTransmissionOptions[car.transmission]}/>}
 						{car.engine === Engine.Electrical && <Characteristic label='Cruising range' field={car.cruisingRange}/>}
 					</section>
 				</>

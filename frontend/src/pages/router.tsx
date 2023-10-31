@@ -6,8 +6,6 @@ import AddCar from './AddCar/AddCar';
 
 const RootBoundary = () => {
 	const error = useRouteError();
-	console.log(error);
-
 	if (isRouteErrorResponse(error)) {
 		if (error.status === 404) {
 			return <div>This page doesn&apos;t exist!</div>;

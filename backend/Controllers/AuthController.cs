@@ -1,9 +1,6 @@
-﻿using System.Security.Cryptography;
-using juztTest_backend.Data;
+﻿using juztTest_backend.Data;
 using juztTest_backend.Db;
 using juztTest_backend.JWT;
-using JWT.Algorithms;
-using JWT.Builder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

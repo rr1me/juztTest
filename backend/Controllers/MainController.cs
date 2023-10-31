@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using juztTest_backend.Data;
+﻿using juztTest_backend.Data;
 using juztTest_backend.Db;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +77,8 @@ public class MainController(PostgresContext db) : ControllerBase
 		var i = db.Cars.Add(car);
 		await db.SaveChangesAsync();
 
+		Directory.CreateDirectory("./images");
+
 		var carImage = car.Image;
 		await using (var stream = new FileStream($"./images/{car.Id}{Path.GetExtension(carImage.FileName)}", FileMode.Create))
 		{
@@ -121,16 +122,4 @@ public class MainController(PostgresContext db) : ControllerBase
 
 		return mimeTypes.TryGetValue(fileExtension, out var contentType) ? contentType : "application/octet-stream";
 	}
-
-	[HttpPut("/checker")]
-	public IActionResult check([FromForm] Car model)
-	{
-		Console.WriteLine(Convert.ToDouble(model.Price));
-		return Ok(model.Price);
-	}
-}
-
-public class Model
-{
-	public double check { get; set; }
 }

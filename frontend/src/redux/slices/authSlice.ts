@@ -10,14 +10,12 @@ export enum Authorized {
 
 type AuthData = {
 	authorized: Authorized,
-	// authorizationError: boolean,
 	username: string,
 	password: string
 }
 
 const initialState: AuthData = {
 	authorized: Authorized.unknown,
-	// authorizationError: false,
 	username: '',
 	password: ''
 };

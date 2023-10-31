@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using juztTest_backend;
+using juztTest_backend.Data;
 using juztTest_backend.Db;
 using juztTest_backend.Middlewares;
 using Microsoft.AspNetCore.Localization;
@@ -27,7 +28,7 @@ app.MapControllers();
 
 app.UseCors(b =>
 {
-	b.WithOrigins("http://localhost:3000");
+	b.WithOrigins(app.Configuration.GetSection("corsOrigin").Value);
 	b.AllowAnyMethod();
 	b.AllowCredentials();
 	b.AllowAnyHeader();
@@ -35,21 +36,15 @@ app.UseCors(b =>
 
 var db = app.Services.GetAutofacRoot().Resolve<PostgresContext>();
 db.Database.EnsureCreated();
-
-// var user = new User
-// {
-// 	Username = "user",
-// 	Password = BCrypt.Net.BCrypt.HashPassword("123456")
-// };
-//
-// db.Users.Add(user);
-//
-
+if (!db.Users.Any())
+{
+	db.Users.Add(new User
+	{
+		Username = "user",
+		Password = BCrypt.Net.BCrypt.HashPassword("123456")
+	});
+}
 db.SaveChanges();
 db.Dispose();
-
-// var publicRsa = RSA.Create();
-// File.WriteAllText("publicKey.pem", publicRsa.ExportRSAPublicKeyPem());
-// File.WriteAllText("privateKey.pem", publicRsa.ExportRSAPrivateKeyPem());
 
 app.Run();

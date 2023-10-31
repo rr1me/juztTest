@@ -1,8 +1,8 @@
 import { AxiosPromise } from 'axios';
 
-export const combinedStyle = (condition: boolean, style: string) => condition ? ' ' + style : '';
+export const API_URL = process.env.REACT_APP_API!;
 
-// export const delay = (t: number) => new Promise(x => setTimeout(x, t));
+export const combinedStyle = (condition: boolean, style: string) => condition ? ' ' + style : '';
 
 export const isNullOrEmpty = (s: string) => !s || !!s.match(/^ *$/);
 

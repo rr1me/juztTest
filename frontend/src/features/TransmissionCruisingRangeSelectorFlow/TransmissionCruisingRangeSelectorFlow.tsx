@@ -1,7 +1,7 @@
 import s from './TransmissionCruisingRangeSelectorFlow.module.scss';
 import { useAppSelector } from '../../redux/store';
 import { useEffect, useRef } from 'react';
-import { InputWrapped, SelectorWrapped } from '../../shared/componentWrappers';
+import { InputWrapped, SelectorWrapped } from '../../entites/ComponentWrappers/ComponentWrappers';
 import { carTransmissionOptions, Engine } from '../../shared/carOptions';
 import { actions } from '../../redux/slices/addCarSlice';
 import { useIsFirstRender } from '../../shared/hooks';

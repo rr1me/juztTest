@@ -46,7 +46,6 @@ const listSlice = createSlice({
 			state.priceSorting = payload;
 		},
 		setBrandFilterState: ({ filters: { brand } }, { payload }: {payload: boolean}) => {
-			console.log(payload);
 			brand.active = payload;
 		},
 		setBrandFilterArgument: ({ filters: { brand } }, { payload }: {payload: string}) => {

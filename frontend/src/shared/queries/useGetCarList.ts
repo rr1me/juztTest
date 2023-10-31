@@ -1,6 +1,7 @@
 import { useAppSelector } from '../../redux/store';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { API_URL } from '../utils';
 
 const useGetCarList = () => {
 	const { yearSorting, priceSorting, filters: { color, brand: { queryArgument: brand } } } = useAppSelector(s=>s.listSlice);
@@ -13,7 +14,7 @@ const useGetCarList = () => {
 	} = useInfiniteQuery({
 		queryKey: ['filters', brand, color, yearSorting, priceSorting],
 		queryFn: async (context) =>
-			(await axios.get(process.env.REACT_APP_API!, { params: {
+			(await axios.get(API_URL, { params: {
 				offset: context.pageParam * 15,
 				limit: 15,
 				brandFilter: brand,

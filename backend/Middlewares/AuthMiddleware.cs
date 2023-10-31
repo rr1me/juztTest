@@ -1,9 +1,6 @@
 ﻿using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text.Encodings.Web;
 using juztTest_backend.JWT;
-using JWT.Algorithms;
-using JWT.Builder;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
