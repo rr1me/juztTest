@@ -5,7 +5,7 @@ import useGetCarList from '../../shared/queries/useGetCarList';
 import { Car } from '../../shared/carOptions';
 
 const CarCardList = () => {
-	const { data, isError, fetchNextPage, isFetching } = useGetCarList();
+	const { data, isError, fetchNextPage, isFetching, params } = useGetCarList();
 
 	useEffect(() => {
 		const onScroll = () => {
@@ -15,7 +15,7 @@ const CarCardList = () => {
 
 		document.addEventListener('scroll', onScroll);
 		return () => document.removeEventListener('scroll', onScroll);
-	}, [isFetching]);
+	}, [isFetching, params]);
 
 	return (
 		<section className={s.carCardList}>

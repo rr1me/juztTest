@@ -9,6 +9,7 @@ const useGetCarList = () => {
 	const {
 		data,
 		isError,
+		error,
 		fetchNextPage,
 		isFetching,
 	} = useInfiniteQuery({
@@ -36,6 +37,7 @@ const useGetCarList = () => {
 		isError,
 		fetchNextPage,
 		isFetching,
+		params: { brandFilter: brand, colorFilter: color, yearSorting, priceSorting }
 	};
 };
 

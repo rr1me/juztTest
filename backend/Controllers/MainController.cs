@@ -16,21 +16,30 @@ public class MainController(PostgresContext db) : ControllerBase
 		{
 			var carList = db.Cars.ToList();
 			
-			if (yearSorting != Sorting.Unset)
+			if (yearSorting != Sorting.Unset && priceSorting == Sorting.Unset)
 			{
-				Comparison<Car> predicate = yearSorting == Sorting.Up ? 
-					(a, b) => a.Year - b.Year 
-					: 
-					(a, b) => b.Year - a.Year;
+				Comparison<Car> predicate = yearSorting == Sorting.Up
+					? (a, b) => a.Year - b.Year
+					: (a, b) => b.Year - a.Year;
 				carList.Sort(predicate);
-			}
-			
-			if (priceSorting != Sorting.Unset)
+			} 
+			else if (priceSorting != Sorting.Unset && yearSorting == Sorting.Unset)
 			{
-				if (priceSorting == Sorting.Up)
-					carList = carList.OrderBy(x => x.Price).ToList();
-				else
-					carList = carList.OrderByDescending(x => x.Price).ToList();
+				Comparison<Car> predicate = priceSorting == Sorting.Up
+					? (a, b) => Convert.ToDouble(a.Price).CompareTo(Convert.ToDouble(b.Price))
+					: (a, b) => Convert.ToDouble(b.Price).CompareTo(Convert.ToDouble(a.Price));
+				
+					carList.Sort(predicate);
+			}
+			else if (yearSorting != Sorting.Unset && priceSorting != Sorting.Unset)
+			{
+				var buffer = priceSorting == Sorting.Up
+					? carList.OrderBy(c => Convert.ToDouble(c.Price))
+					: carList.OrderByDescending(c => Convert.ToDouble(c.Price));
+
+				buffer = yearSorting == Sorting.Up ? buffer.ThenBy(c => c.Year) : buffer.ThenByDescending(c => c.Year);
+
+				carList = buffer.ToList();
 			}
 
 			if (!string.IsNullOrEmpty(brandFilter))
