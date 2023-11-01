@@ -15,15 +15,6 @@ public class MainController(PostgresContext db) : ControllerBase
 		try
 		{
 			var carList = db.Cars.ToList();
-
-			var carCount = carList.Count;
-
-			var processedLimit = limit;
-
-			if (limit == 0 || limit + offset > carCount)
-			{
-				processedLimit = carCount - offset;
-			}
 			
 			if (yearSorting != Sorting.Unset)
 			{
@@ -41,16 +32,25 @@ public class MainController(PostgresContext db) : ControllerBase
 				else
 					carList = carList.OrderByDescending(x => x.Price).ToList();
 			}
-			
-			var slicedList = carList.Slice(offset, processedLimit).ToList();
 
 			if (!string.IsNullOrEmpty(brandFilter))
-				slicedList = slicedList.Where(x => x.Brand.Contains(brandFilter)).ToList();
+				carList = carList.Where(x => x.Brand.Contains(brandFilter, StringComparison.CurrentCultureIgnoreCase)).ToList();
 
 			if (colorFilter != ColorFilter.Unset)
 			{
-				slicedList = slicedList.ToArray().Where(x => x.Color == colorFilter).ToList();
+				carList = carList.ToArray().Where(x => x.Color == colorFilter).ToList();
 			}
+			
+			var carCount = carList.Count;
+
+			var processedLimit = limit;
+
+			if (limit == 0 || limit + offset > carCount)
+			{
+				processedLimit = carCount - offset;
+			}
+			
+			var slicedList = carList.Slice(offset, processedLimit).ToList();
 			
 			return Ok(slicedList);
 		}
