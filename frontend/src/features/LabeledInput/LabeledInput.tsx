@@ -95,4 +95,4 @@ const LabeledInput = ({
 	);
 };
 
-export default memo(LabeledInput);
+export default LabeledInput;
